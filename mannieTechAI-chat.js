@@ -129,7 +129,70 @@ document.addEventListener('DOMContentLoaded', function () {
     function init() {
         initSound();
         initChatHistory();
+        initMobileBehaviors();
         setupEventListeners();
+    }
+
+    // Add this new function for mobile behaviors
+    function initMobileBehaviors() {
+        const sideNav = document.getElementById('sideNav');
+        const navToggle = document.getElementById('navToggle');
+        
+        // Close nav when a chat is selected on mobile
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                // Close nav when clicking on chat items
+                if (e.target.closest('.chat-item-content')) {
+                    sideNav.classList.remove('nav-open');
+                }
+                
+                // Close nav when starting a new chat
+                if (e.target.closest('.newChatBtn')) {
+                    setTimeout(() => {
+                        sideNav.classList.remove('nav-open');
+                    }, 300);
+                }
+            }
+        });
+        
+        // Prevent body scroll when nav is open on mobile
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    if (sideNav.classList.contains('nav-open')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        });
+        
+        observer.observe(sideNav, { attributes: true });
+        
+        // Handle orientation changes
+        window.addEventListener('orientationchange', function() {
+            // Close nav on orientation change
+            sideNav.classList.remove('nav-open');
+            
+            // Small delay to ensure CSS is applied
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        });
+        
+        // Handle resize events
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Close nav on resize to mobile
+                if (window.innerWidth > 768) {
+                    sideNav.classList.remove('nav-open');
+                    document.body.style.overflow = '';
+                }
+            }, 250);
+        });
     }
 
     // Initialize sound
@@ -438,15 +501,39 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        navToggle.addEventListener('click', function () {
+        // Enhanced nav toggle for mobile
+        navToggle.addEventListener('click', function() {
             sideNav.classList.toggle('nav-open');
+            
+            // On mobile, focus management
+            if (window.innerWidth <= 768 && sideNav.classList.contains('nav-open')) {
+                // Set focus to first element in nav for better accessibility
+                const firstNavElement = sideNav.querySelector('.newChatBtn');
+                if (firstNavElement) {
+                    firstNavElement.focus();
+                }
+            }
         });
 
-        // Auto-resize input field
+        // Enhanced auto-resize input field for mobile
         typingInput.addEventListener('input', function() {
             this.style.height = 'auto';
-            const newHeight = Math.min(this.scrollHeight, 150);
+            const newHeight = Math.min(this.scrollHeight, 120); // Reduced max height for mobile
             this.style.height = newHeight + 'px';
+            
+            // Adjust messages container padding to avoid overlap with keyboard
+            if (window.innerWidth <= 768) {
+                messagesContainer.style.paddingBottom = (newHeight + 20) + 'px';
+            }
+        });
+
+        // Reset messages container padding when input is cleared
+        typingInput.addEventListener('blur', function() {
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    messagesContainer.style.paddingBottom = '15px';
+                }, 300);
+            }
         });
 
         // Send message events with sound
@@ -534,7 +621,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } catch (error) {
             console.error('Error from OpenRouter:', error);
-            const errorMessage = `I apologize, but I'm having trouble connecting right now. Error: ${error.message}. Please check your API key and try again.`;
+            const errorMessage = `I apologize, but I'm having trouble connecting right now. Error: ${error.message}. Please reach out to Manasseh or try again.`;
             messageContent.innerHTML = errorMessage;
             return errorMessage;
         }
