@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannieTech AI Chat</title>
+    <link rel="stylesheet" href="/mannieTechAI-chat.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav id="sideNav">
+            <div class="nav-header">
+                <img src="/MT-Robot.png" alt="robot" height="76px">
+                <div class="nav-title">MannieTech AI</div>
+            </div>
+
+            <button class="newChatBtn" id="newChatBtn">
+                New Chat <svg class="svg-newChat" xmlns="http://www.w3.org/2000/svg" height="24px"
+                    viewBox="0 -960 960 960" width="24px" fill="#F3F3F3">
+                    <path
+                        d="M120-160v-600q0-33 23.5-56.5T200-840h480q33 0 56.5 23.5T760-760v203q-10-2-20-2.5t-20-.5q-10 0-20 .5t-20 2.5v-203H200v400h283q-2 10-2.5 20t-.5 20q0 10 .5 20t2.5 20H240L120-160Zm160-440h320v-80H280v80Zm0 160h200v-80H280v80Zm400 280v-120H560v-80h120v-120h80v120h120v80H760v120h-80ZM200-360v-400 400Z" />
+                </svg>
+            </button>
+
+            <div class="chat-history">
+                <div class="chat-history-header">
+                    <h1>Recent chats</h1>
+                    <button class="clear-all-btn" id="clearAllBtn">Clear All</button>
+                </div>
+                <div class="old-chats" id="oldChats">
+                    <!-- Recent chats will be dynamically added here -->
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="chat-header">
+                <button class="nav-toggle" id="navToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                        fill="#FFFFFF">
+                        <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+                    </svg>
+                    Menu
+                </button>
+                <div class="chat-title">MannieTech AI Assistant</div>
+                <div style="width: 100px;"></div> <!-- Spacer for alignment -->
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <!-- Welcome Screen (shown when no messages) -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon"><img src="/MT-Robot.png" alt="robot" height="76px"></div>
+                    <h1 class="welcome-title">Welcome to MannieTech AI</h1>
+                    <p class="welcome-text">I'm your AI assistant ready to help with web development, design, coding,
+                        and more. Start a conversation by typing a message below.</p>
+
+                    <div class="features">
+                        <div class="feature">
+                            <div class="feature-icon">💡</div>
+                            <h3>Code Help</h3>
+                            <p>Get assistance with programming problems</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🎨</div>
+                            <h3>Design Tips</h3>
+                            <p>UI/UX and design recommendations</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🔍</div>
+                            <h3>Debugging</h3>
+                            <p>Find and fix issues in your code</p>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🚀</div>
+                            <h3>Best Practices</h3>
+                            <p>Learn industry standards and techniques</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages will be added here dynamically -->
+            </div>
+
+            <div class="typing-div">
+                <div class="input-container">
+                    <textarea class="typing-input" placeholder="Ask me anything about web development..."
+                        rows="1"></textarea>
+                    <button class="sendBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#FFFFFF">
+                            <path
+                                d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Delete Chat</h3>
+                <button class="modal-close" id="modalClose">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                        fill="#FFFFFF">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p>Are you sure you want to delete this chat? This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-cancel" id="modalCancel">Cancel</button>
+                <button class="modal-delete" id="modalDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load config first, then main script -->
+    <script src="/config.js"></script>
+    <script src="/mannieTechAI-chat.js"></script>
+
+
+
+
+
+
+    <!-- Site Loading Screen -->
+    <div class="site-loader" id="siteLoader">
+        <div class="loading-content">
+            <div class="logo-container">
+                <div class="logo-spinner">
+                    <img src="/MT-Robot.png" alt="MannieTech AI" class="loader-logo">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-orbits">
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+                        <div class="orbit orbit-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-text">
+                <h1 class="brand-title">MannieTech AI</h1>
+                <p class="brand-subtitle">Intelligent Web Development Assistant</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+
+            <div class="loading-features">
+                <div class="feature-item">
+                    <span class="feature-icon">🚀</span>
+                    <span>Initializing AI Engine</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💡</span>
+                    <span>Loading Knowledge Base</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔧</span>
+                    <span>Preparing Interface</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear All Confirmation Modal -->
+    <div class="clear-all-modal-overlay" id="clearAllModalOverlay">
+        <div class="clear-all-modal">
+            <div class="clear-all-modal-header">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="currentColor">
+                        <path
+                            d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                    </svg>
+                    Clear All Chats
+                </h3>
+                <button class="clear-all-modal-close" id="clearAllModalClose">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                        fill="#FFFFFF">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="clear-all-modal-content">
+                <div class="clear-all-modal-icon">⚠️</div>
+                <p>Are you sure you want to delete all chats? This action cannot be undone and all your conversation
+                    history will be permanently lost.</p>
+            </div>
+            <div class="clear-all-modal-actions">
+                <button class="clear-all-modal-cancel" id="clearAllModalCancel">Cancel</button>
+                <button class="clear-all-modal-confirm" id="clearAllModalConfirm">Clear All</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

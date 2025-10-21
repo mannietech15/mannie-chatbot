@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannieTech AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="particles-js"></div>
+
+    <div class="main-content">
+        <img class="robot" src="/MT-Robot.png" alt="MannieTech Robot Logo">
+    </div>
+
+    <div class="main-content">
+        <img class="labelForRobot" src="/mannieTech-RobotLabel.png" alt="MannieTech Label">
+    </div>
+
+    <div class="bottom-divs">
+        <a href="login&signup.html" class="strtNow">
+            <h1>Start now</h1>
+            <p>Free access to MannieTech-V22.4.</p>
+            <p>Experience the intelligent Model</p>
+        </a>
+        <div class="getApp">
+            <h1>Get app</h1>
+            <p>Chat on the go with MannieTech-V22.4.</p>
+            <p>Your free All-in-one AI tool</p>
+        </div>
+    </div>
+
+
+    <!-- Site Loading Screen -->
+    <div class="site-loader" id="siteLoader">
+        <div class="loading-content">
+            <div class="logo-container">
+                <div class="logo-spinner">
+                    <img src="/MT-Robot.png" alt="MannieTech AI" class="loader-logo">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-orbits">
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+                        <div class="orbit orbit-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-text">
+                <h1 class="brand-title">MannieTech AI</h1>
+                <p class="brand-subtitle">Intelligent Web Development Assistant</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+
+            <div class="loading-features">
+                <div class="feature-item">
+                    <span class="feature-icon">🚀</span>
+                    <span>Initializing AI Engine</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💡</span>
+                    <span>Loading Knowledge Base</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔧</span>
+                    <span>Preparing Interface</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": { "value": "#6c63ff" },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.4 },
+                    "size": { "value": 3, "random": true },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#6c63ff",
+                        "opacity": 0.3,
+                        "width": 1
+                    },
+                    "move": { "enable": true, "speed": 2, "out_mode": "out" }
+                },
+
+                "interactivity": {
+                    "detect_on": "window",
+                    "events": {
+                        "onhover": { "enable": true, "mode": "grab" },
+                        "onclick": { "enable": true, "mode": "repulse" },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 220,
+                            "line_linked": { "opacity": 0.9 }
+                        },
+                        "repulse": { "distance": 200, "duration": 0.4 },
+                        "push": { "particles_nb": 4 }
+                    }
+                },
+
+                "retina_detect": true
+            });
+        }
+
+        // Enhanced interactivity for mobile
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttons = document.querySelectorAll('.strtNow, .getApp');
+
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function () {
+                    this.style.transform = 'translateY(-4px)';
+                });
+
+                button.addEventListener('touchend', function () {
+                    this.style.transform = 'translateY(-8px)';
+                });
+            });
+        });
+        ////////////////////////////////////
+        // Site Loader functionality
+function initSiteLoader() {
+    const siteLoader = document.getElementById('siteLoader');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    
+    if (!siteLoader) return;
+    
+    let progress = 0;
+    const targetProgress = 100;
+    const duration = 2500; // 2.5 seconds total
+    const interval = 50; // Update every 50ms
+    const steps = duration / interval;
+    const increment = targetProgress / steps;
+    
+    // Simulate loading progress
+    const progressInterval = setInterval(() => {
+        progress += increment;
+        
+        if (progress >= targetProgress) {
+            progress = targetProgress;
+            clearInterval(progressInterval);
+            
+            // Complete loading
+            setTimeout(() => {
+                siteLoader.classList.add('fade-out');
+                setTimeout(() => {
+                    siteLoader.style.display = 'none';
+                }, 800);
+            }, 500);
+        }
+        
+        // Update progress bar and text
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}%`;
+        
+    }, interval);
+}
+
+// Update your DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize site loader first
+    initSiteLoader();
+    
+    // Then initialize your main application after a brief delay
+    setTimeout(() => {
+        // Your existing initialization code here...
+        const navToggle = document.getElementById('navToggle');
+        const sideNav = document.getElementById('sideNav');
+        // ... rest of your existing initialization code
+        
+        // Initialize the application
+        init();
+    }, 500);
+});
+
+// Also handle page refresh/show
+window.addEventListener('beforeunload', function() {
+    // Show loader again when page is about to refresh
+    const siteLoader = document.getElementById('siteLoader');
+    if (siteLoader) {
+        siteLoader.style.display = 'flex';
+        siteLoader.classList.remove('fade-out');
+    }
+});
+
+// Handle page load from cache (back/forward navigation)
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was loaded from cache, show loader briefly
+        const siteLoader = document.getElementById('siteLoader');
+        if (siteLoader) {
+            siteLoader.style.display = 'flex';
+            siteLoader.classList.remove('fade-out');
+            setTimeout(() => {
+                siteLoader.classList.add('fade-out');
+                setTimeout(() => {
+                    siteLoader.style.display = 'none';
+                }, 800);
+            }, 1000);
+        }
+    }
+});
+    </script>
+</body>
+
+</html>

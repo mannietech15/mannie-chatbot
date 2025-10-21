@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannieTech AI - Login & Signup</title>
+    <link rel="stylesheet" href="login&signup.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Animated Background -->
+        <div class="animated-bg">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="returnToHomePage">
+            <a href="index.html">
+                <button class="back-btn">
+                    <svg class="svg-button-back" xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#F3F3F3">
+                        <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
+                    </svg>
+                    <span class="btn-text">Back</span>
+                </button>
+            </a>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="MT-logo-div">
+            <div class="logo-container">
+                <div class="robot-div">
+                    <img src="/MT-Robot.png" alt="MannieTechRobot" class="robot-img">
+                </div>
+                <div class="robot-label-div">
+                    <img src="/mannieTech-RobotLabel.png" alt="MannieTechLabel" class="label-img">
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-container">
+            <form class="login-signup-form">
+                <div class="form-group" data-aos="fade-up" data-aos-delay="100">
+                    <label class="label-input" for="usrn">Username:</label>
+                    <input class="input-details" type="text" placeholder="Enter Username..." required>
+                    <div class="input-focus-line"></div>
+                </div>
+
+                <div class="form-group" data-aos="fade-up" data-aos-delay="200">
+                    <label class="label-input" for="email">Email:</label>
+                    <input class="input-details" type="email" placeholder="Enter Email..." required>
+                    <div class="input-focus-line"></div>
+                </div>
+
+                <div class="form-group" data-aos="fade-up" data-aos-delay="300">
+                    <label class="label-input" for="password">Password:</label>
+                    <input class="input-details" type="password" placeholder="Enter Password..." required>
+                    <div class="input-focus-line"></div>
+                </div>
+
+                <div class="form-options" data-aos="fade-up" data-aos-delay="400">
+                    <a class="link-ForgotPassword" href="#">
+                        Forgot Password?
+                    </a>
+                </div>
+
+                <div class="login-signup-btn" data-aos="fade-up" data-aos-delay="500">
+                    <button class="loginBtn" type="submit">
+                        <span class="btn-content">
+                            <span class="btn-text">Login</span>
+                            <span class="btn-arrow">→</span>
+                        </span>
+                        <div class="btn-shine"></div>
+                    </button>
+                    <button class="signupBtn" type="button">
+                        <span class="btn-content">
+                            <span class="btn-text">Sign Up</span>
+                            <span class="btn-arrow">→</span>
+                        </span>
+                        <div class="btn-shine"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Particles Background -->
+        <div id="particles-js"></div>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Auth JavaScript -->
+    <script src="auth.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Particles.js initialization
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 40, density: { enable: true, value_area: 800 } },
+                    color: { value: "#6c63ff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#6c63ff",
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: { enable: true, speed: 1, out_mode: "out" }
+                },
+                interactivity: {
+                    detect_on: "window",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    }
+                }
+            });
+        }
+
+        // Input focus animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = document.querySelectorAll('.input-details');
+
+            inputs.forEach(input => {
+                input.addEventListener('focus', function () {
+                    this.parentElement.classList.add('focused');
+                });
+
+                input.addEventListener('blur', function () {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+
+            // Button hover effects
+            const buttons = document.querySelectorAll('.loginBtn, .signupBtn, .back-btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-2px)';
+                });
+
+                button.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
