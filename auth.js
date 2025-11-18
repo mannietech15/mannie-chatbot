@@ -368,7 +368,7 @@ class AuthManager {
                     background: rgba(255, 255, 255, 0.1);
                 }
 
-                @media (max-width: 768px) {
+                @media (max-width: 768px) {T
                     .auth-notification {
                         top: 10px;
                         right: 10px;
